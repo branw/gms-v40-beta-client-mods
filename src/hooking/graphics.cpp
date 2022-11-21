@@ -62,8 +62,10 @@ void hook_wndproc(HWND window) {
     static WNDPROC WndProc_hook = [](HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) -> LRESULT {
         ImGui_ImplWin32_WndProcHandler(hWnd, uMsg, wParam, lParam);
 
+        // Avoid passing events to the game when interacting with the menu,
+        // except for messages with uMsg=1025 used by the game engine
         auto const &io = ImGui::GetIO();
-        if (io.WantCaptureMouse|| io.WantCaptureKeyboard) {
+        if ((io.WantCaptureMouse|| io.WantCaptureKeyboard) && uMsg < WM_USER) {
             return TRUE;
         }
 
