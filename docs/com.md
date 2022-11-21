@@ -1,0 +1,36 @@
+```
+Canvas.dll
+Canvas: 2aadc0a2_1be3_47b5_84a8_d343cb95b062
+Font: 1afb9d97_beb5_42bf_8909_709b7c028d78
+
+Database.dll
+UnifiedDB: f5b4389f_214d_4a07_9d92_27dc9a3f9638
+
+NameSpace.dll
+NameSpace: a1cf36f7_edca_4954_8923_3e05c21ab013
+FileSystem: e4676e96_fb15_4e49_9046_ca29bd19460c
+Package: e4676e96_fb15_4e49_9046_ca29bd19460c
+PackageWriter: e4676e96_fb15_4e49_9046_ca29bd19460c
+
+PCOM.dll
+Property: 5997c45c_3dba_4d49_b6e4_a62fd85ee9f9
+List: 1d80a623_f41d_4947_a838_0676f38f9e04
+UOL: 1a764890_27c9_47e2_a335_10a142670887
+
+ResMan.dll
+ResMan: 1d710714_72e2_47b9_aec1_02bae07487df
+
+Shape2D.dll
+Vector2D: c73cb37e_baba_4870_a0e0_6fd341ba43f8
+Convex2D: ac8daf42_33b1_4f78_b6b0_d28395de21f7
+PolyShape2D: 74e25d99_588f_4bad_9898_e9630a1f5fa7
+
+IWzResMan: 57dfe40b_3e20_4dbc_97e8_805a50f381bf
+IWzArchive: 3c39b9aa_18cc_408c_8716_c4fb2117266e
+IWzSeekableArchive: 35c1f133_7f61_496e_878f_9a1758afa9ea
+IWzShape2D: 4cfb57c7_eae3_40b3_ac98_4b2750e3642a
+IWzVector2D: f28bd1ed_3deb_4f92_9eec_10ef5a1c3fb4
+IWzProperty: 986515d9_0a0b_4929_8b4f_718682177b92
+IWzUOL: f945bf59_d1ec_45e8_8bd9_3dd11ac1a48a
+IClassFactory: 00000001_0000_0000_c000_000000000046
+```
