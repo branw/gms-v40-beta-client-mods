@@ -7,8 +7,9 @@ find_package(fmt CONFIG REQUIRED)
 find_package(imgui CONFIG REQUIRED)
 
 add_library(maple SHARED
-        src/main.cpp src/dinput8.cpp
+        src/main.cpp src/dinput8.cpp src/rendering.cpp
         src/hooking/bootstrap.cpp src/hooking/packets.cpp src/hooking/string_pool.cpp
+        src/hooking/graphics.cpp
         src/util/hooking/guard_pages.cpp
         src/util/logging/console_logger_sink.cpp src/util/logging/file_logger_sink.cpp
         src/util/logging/logger.cpp src/util/logging/stack_trace.cpp

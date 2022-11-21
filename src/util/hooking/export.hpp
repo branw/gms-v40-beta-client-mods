@@ -2,7 +2,9 @@
 #define MAPLE_6D5593289FEA48CD97ABD83F958D3576_HPP
 
 #include <Windows.h>
+#include <array>
 #include <string_view>
+
 #include "../logging/logger.hpp"
 
 template<typename Func>
