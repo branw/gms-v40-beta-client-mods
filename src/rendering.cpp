@@ -1,10 +1,13 @@
-#include <imgui.h>
-#include <filesystem>
-
 #include "rendering.hpp"
+
 #include "cursor_icon.hpp"
+#include "hooking/string_pool.hpp"
 #include "util/logging/logger.hpp"
 #include "util/rendering/d3d8.h"
+
+#include <filesystem>
+#include <imgui.h>
+#include <imgui_stdlib.h>
 
 void init_imgui() {
     auto &style = ImGui::GetStyle();
@@ -140,8 +143,124 @@ void draw_cursor() {
 }
 
 void draw_menu() {
-    static bool b;
-    ImGui::Checkbox("111", &b);
+    ImGui::Checkbox("Log StringPool reads", &log_string_pool_reads);
 
     draw_cursor();
 }
+
+//#define FORMAT(...) fmt::format(__VA_ARGS__).c_str()
+//
+//struct StringPoolReplacement {
+//    uint32_t index;
+//    std::string original;
+//    ZXString<char> replacement;
+//};
+
+//    if (TreeNode("String Pool Overrides")) {
+//        PushItemWidth(250);
+
+//        static std::vector<StringPoolReplacement> replacements{};
+//        if (replacements.empty()) {
+//            replacements.push_back({
+//                    2133, "Ver 0.40", ZXString<char>::create("Ver 13.37")
+//            });
+//        }
+//
+//         auto const flags =
+//                ImGuiTableFlags_Resizable | ImGuiTableFlags_Reorderable | ImGuiTableFlags_Hideable | ImGuiTableFlags_Sortable | ImGuiTableFlags_SortMulti
+//                | ImGuiTableFlags_RowBg | ImGuiTableFlags_BordersOuter | ImGuiTableFlags_BordersV | ImGuiTableFlags_NoBordersInBody
+//                | ImGuiTableFlags_ScrollY;
+//
+//         if (BeginTable("string_pool_overrides", 4, flags)) {
+//             TableSetupColumn("ID", ImGuiTableColumnFlags_DefaultSort | ImGuiTableColumnFlags_WidthFixed);
+//             TableSetupColumn("Original");
+//             TableSetupColumn("Replacement");
+//             TableSetupColumn("Actions", ImGuiTableColumnFlags_NoSort);
+//             TableSetupScrollFreeze(0, 1);
+//             TableHeadersRow();
+//
+//             if (auto const sort_specs = TableGetSortSpecs(); sort_specs->SpecsDirty) {
+//                 std::sort(replacements.begin(), replacements.end(),
+//                           [=](auto const &lhs, auto const &rhs) -> bool {
+//                               for (auto i = 0; i < sort_specs->SpecsCount; i++) {
+//                                   auto result = false;
+//
+//                                   auto const spec = sort_specs->Specs[i];
+//                                   switch (spec.ColumnIndex) {
+//                                   case 0: // ID
+//                                       result = lhs.index < rhs.index;
+//                                       break;
+//
+//                                   case 1: // Original
+//                                       result = lhs.original.compare(rhs.original) >= 0;
+//                                       break;
+//
+//                                   case 2: // Replacement
+//                                       result = strcmp(lhs.replacement.str, rhs.replacement.str) >= 0;
+//                                       break;
+//                                   }
+//
+//                                   if (spec.SortDirection == ImGuiSortDirection_Ascending) {
+//                                       result ^= true;
+//                                   }
+//
+//                                   return result;
+//                               }
+//
+//                               return true;
+//                           });
+//
+//                 sort_specs->SpecsDirty = false;
+//             }
+//
+//             ImGuiListClipper clipper;
+//             clipper.Begin(static_cast<int>(replacements.size()));
+//             while (clipper.Step()) {
+//                 for (auto i = clipper.DisplayStart; i < clipper.DisplayEnd; i++) {
+//                     auto &row = replacements[i];
+//                     PushID(i);
+//
+//                     TableNextRow();
+//                     TableNextColumn();
+//                     Text("%4d", row.index);
+//
+//                     TableNextColumn();
+//                     TextUnformatted(row.original.c_str());
+//
+//                     TableNextColumn();
+//                     TextUnformatted(row.replacement.str);
+//
+//                     TableNextColumn();
+//                     SmallButton("Foo");
+//
+//                     PopID();
+//                 }
+//             }
+//
+//             EndTable();
+//         }
+
+//        static uint32_t selected_index = -1;
+//        if (BeginListBox("Replacements##string_pool_overrides")) {
+////            for (auto &[index, replacement] : replacements) {
+////                if (Selectable("foo", index == selected_index)) {
+////                    selected_index = index;
+////                }
+////            }
+//
+//            Selectable("foo", true);
+//            Selectable("bar", false);
+//
+//            EndListBox();
+//        }
+//        SameLine();
+//
+//        BeginGroup();
+//        static std::string replacement{};
+//        InputText("Replacement", &replacement);
+//
+//        EndGroup();
+
+//        PopItemWidth();
+//        TreePop();
+//    }
