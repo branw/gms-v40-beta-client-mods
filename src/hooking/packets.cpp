@@ -152,7 +152,7 @@ bool handle_out_packet_hooks(uintptr_t addr, PCONTEXT ctx) {
                             out_packet->length, expected_length);
         }
 
-        logger->trace("SEND {}", buffer);
+        logger->trace("SEND {}", buffer.data());
 
         outbound_packets.erase(packet);
 
@@ -270,7 +270,7 @@ bool handle_in_packet_hooks(uintptr_t addr, PCONTEXT ctx) {
             fmt::format_to(std::back_inserter(buffer), "{:02x} ", bytes[i]);
         }
 
-        logger->trace("CInPacket: {}", buffer);
+        logger->trace("CInPacket: {}", buffer.data());
 
         // seg000:004E98AB                 mov     eax, offset loc_610CB3
         // seg000:004E98B0                 call    __EH_prolog
@@ -413,7 +413,7 @@ bool handle_in_packet_hooks(uintptr_t addr, PCONTEXT ctx) {
             expected_length += segment->length();
         }
 
-        logger->trace("RECV {}", buffer);
+        logger->trace("RECV {}", buffer.data());
 
         inbound_packet.clear();
 
