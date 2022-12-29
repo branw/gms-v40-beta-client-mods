@@ -15,6 +15,7 @@ following capabilities without needing to modify any game files:
 - Arbitrary window resolutions
 - Override in-game text
 - Skip opening screen logos
+- Draw a menu on top of the game
 
 ### Networking
 
