@@ -9,11 +9,6 @@
 
 #include <dbghelp.h>
 
-void install_exception_logger() {
-    uint32_t const first_exception_handler = 1;
-    AddVectoredExceptionHandler(first_exception_handler, exception_logger_hook);
-}
-
 void log_stack_trace(LogLevel log_level) {
     CONTEXT context{0};
     RtlCaptureContext(&context);
@@ -115,7 +110,7 @@ LONG WINAPI exception_logger_hook(PEXCEPTION_POINTERS ex) {
                    fmt::format("Exception {:08x} at {:08x} ({}+{:08x})", code, addr,
                                module_name, offset)
                            .c_str(),
-                   "Niko Exception", MB_ICONERROR | MB_OK);
+                   "MapleStory Fatal Exception", MB_ICONERROR | MB_OK);
     } else if (code == DBG_PRINTEXCEPTION_C && ex->ExceptionRecord->NumberParameters == 2) {
         //auto len = static_cast<ULONG>(ex->ExceptionRecord->ExceptionInformation[0]);
         std::string str{reinterpret_cast<PCSTR>(ex->ExceptionRecord->ExceptionInformation[1])};

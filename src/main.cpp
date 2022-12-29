@@ -6,7 +6,6 @@
 #include "hooking/packets.hpp"
 #include "hooking/string_pool.hpp"
 #include "maple/addresses.hpp"
-#include "util/hooking/export.hpp"
 #include "util/logging/console_logger_sink.hpp"
 #include "util/logging/file_logger_sink.hpp"
 #include "util/logging/stack_trace.hpp"
@@ -54,7 +53,7 @@
     return TRUE;
 }
 
-LONG CALLBACK packet_hook(PEXCEPTION_POINTERS ex) {
+LONG CALLBACK exception_handler(PEXCEPTION_POINTERS ex) {
     auto const addr = reinterpret_cast<uintptr_t>(ex->ExceptionRecord->ExceptionAddress);
     auto const ctx = ex->ContextRecord;
 
@@ -65,7 +64,12 @@ LONG CALLBACK packet_hook(PEXCEPTION_POINTERS ex) {
         return EXCEPTION_CONTINUE_EXECUTION;
     }
 
-    return EXCEPTION_CONTINUE_SEARCH;
+    return exception_logger_hook(ex);
+}
+
+void install_vectored_exception_handler() {
+    uint32_t const first_exception_handler = 1;
+    AddVectoredExceptionHandler(first_exception_handler, exception_handler);
 }
 
 void patch_window() {
@@ -244,7 +248,7 @@ void init() {
     auto &console = logger->add_sink<ConsoleLoggerSink>(LogLevel::Debug);
     console.set_title(fmt::format("Debug | {}", GetCurrentProcessId()));
 
-    install_exception_logger();
+    install_vectored_exception_handler();
 
     enable_multi_client();
 
@@ -258,8 +262,6 @@ void init() {
 
     disable_crypto();
 
-    uint32_t const first_exception_handler = 1;
-    AddVectoredExceptionHandler(first_exception_handler, packet_hook);
     install_packet_breakpoints();
 
     disable_chat_restrictions();
