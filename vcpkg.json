@@ -1,0 +1,12 @@
+{
+  "name" : "gms-v40-beta-client-mods",
+  "version" : "0.1",
+  "dependencies" : [ {
+    "name" : "imgui",
+    "features" : [ "docking-experimental", "win32-binding" ]
+  }, {
+    "name" : "fmt",
+    "version>=" : "11.0.2"
+  } ],
+  "builtin-baseline" : "3c3cce612bea089a18f1693bcf153476a7e0ae3a"
+}
