@@ -62,6 +62,10 @@ void hook_wndproc(HWND window) {
     static WNDPROC WndProc_hook = [](HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) -> LRESULT {
         ImGui_ImplWin32_WndProcHandler(hWnd, uMsg, wParam, lParam);
 
+        if (uMsg == WM_PAINT) {
+            ValidateRect(hWnd, nullptr);
+        }
+
         // Avoid passing events to the game when interacting with the menu,
         // except for messages with uMsg=1025 used by the game engine
         auto const &io = ImGui::GetIO();
@@ -129,10 +133,12 @@ void hook_d3d_create() {
     using Direct3DCreate8_type = IDirect3D8 *(__stdcall *)(UINT);
     static Direct3DCreate8_type Direct3DCreate8_original{};
     static Direct3DCreate8_type Direct3DCreate8_hook = [](UINT SDKVersion) -> IDirect3D8 * {
+        if (SDKVersion != D3D_SDK_VERSION) {
+            logger->error("D3D SDK version {} does not match D3D_SDK_VERSION {}", SDKVersion, D3D_SDK_VERSION);
+        }
+
         auto const d3d = Direct3DCreate8_original(SDKVersion);
-
         hook_create_device(d3d);
-
         return d3d;
     };
 
